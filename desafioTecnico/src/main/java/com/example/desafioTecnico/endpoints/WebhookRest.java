@@ -21,10 +21,9 @@ public class WebhookRest {
                     System.out.println("🟢 Erro ao criar contato com ID: " + evento.getObjectId());
                 }
             });
-
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Não foi possível efetuar a requisição do webhook");
         }
         return ResponseEntity.badRequest().build();
     }

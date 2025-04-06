@@ -17,10 +17,6 @@ public class CallbackStorage {
 
     private Callback callback;
 
-    public boolean hasCallback() {
-        return this.callback != null;
-    }
-
     public void armazenarResposta(ResponseEntity<String> response) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Callback callback = mapper.readValue(response.getBody(), Callback.class);

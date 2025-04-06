@@ -10,11 +10,6 @@ import java.util.Date;
 @Setter
 public class Callback {
 
-    private static Callback callback;
-
-    private Callback() {
-    }
-
     @JsonProperty("token_type")
     private String tokenType;
     @JsonProperty("refresh_token")
@@ -24,11 +19,4 @@ public class Callback {
     @JsonProperty("expires_in")
     private int expiresIn;
     private Date dataCriacao;
-
-    public static Callback getInstance() {
-        if (callback == null) {
-            callback = new Callback();
-        }
-        return callback;
-    }
 }
