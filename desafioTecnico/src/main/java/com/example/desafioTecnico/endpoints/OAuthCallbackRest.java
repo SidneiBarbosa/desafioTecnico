@@ -22,7 +22,7 @@ public class OAuthCallbackRest {
     private CallbackStorage callbackStorage;
 
     @GetMapping("/callback")
-    public ResponseEntity<String> handleCallback(@RequestParam String code) {
+    public String handleCallback(@RequestParam String code) {
         RestTemplate restTemplate = new RestTemplate();
 
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
@@ -39,7 +39,7 @@ public class OAuthCallbackRest {
     }
 
     @GetMapping("/refreshToken")
-    public ResponseEntity<String> refreshAccessToken(String refreshToken) {
+    public String refreshAccessToken(String refreshToken) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -51,7 +51,7 @@ public class OAuthCallbackRest {
         return obterToken(formData, headers, restTemplate);
     }
 
-    private ResponseEntity<String> obterToken(MultiValueMap<String, String> requestBody, HttpHeaders headers, RestTemplate restTemplate) {
+    private String obterToken(MultiValueMap<String, String> requestBody, HttpHeaders headers, RestTemplate restTemplate) {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
         try {
             ResponseEntity<String> response = restTemplate.exchange(Constantes.URL_HUBSPOT_BASE + Constantes.ENDPOINT_TOKEN, HttpMethod.POST, request, String.class);
@@ -60,7 +60,7 @@ public class OAuthCallbackRest {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            return ResponseEntity.ok(response.getBody());
+            return "Autenticação efetuada com sucesso! Você agora pode fechar essa página";
         } catch (RestClientException e) {
             System.out.println("Houve um erro ao obter o token");
         }
